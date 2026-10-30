@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flowlet · launch checklist</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #151926; --bg2: #1B2030; --text: #E8EAF2; --soft: #B6BCD0; --muted: #8A93B0;
+  --green: #8FD5A9; --red: #FF5A6E; --hair: rgba(255,255,255,.14);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 "Bricolage Grotesque", system-ui, sans-serif; }
+main { max-width: 860px; margin: 0 auto; padding: 40px 20px 120px; }
+h1 { font-size: clamp(32px, 6vw, 48px); line-height: 1.05; letter-spacing: -.03em; margin: 0 0 10px; font-weight: 800; }
+h1 b { color: var(--green); font-weight: 800; }
+.kick { font: 12.5px/1.5 "Space Mono", monospace; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.lead { color: var(--soft); max-width: 40em; margin: 14px 0 0; }
+.bar { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 12px 0 10px; border-bottom: 1px dashed var(--hair); margin: 28px 0 8px; display: flex; gap: 14px; align-items: center; }
+.bar .track { flex: 1; height: 6px; background: var(--bg2); border-radius: 3px; overflow: hidden; }
+.bar .fill { height: 100%; width: 0; background: var(--green); transition: width .25s; }
+.bar .num { font: 12.5px "Space Mono", monospace; color: var(--soft); white-space: nowrap; }
+nav.toc { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 12px 0 0; font: 12.5px "Space Mono", monospace; }
+nav.toc a { color: var(--muted); text-decoration: none; }
+nav.toc a:hover { color: var(--text); }
+details { border-top: 1px dashed var(--hair); padding: 6px 0 14px; }
+summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 12px; padding: 14px 0 6px; }
+summary::-webkit-details-marker { display: none; }
+summary h2 { margin: 0; font-size: 24px; letter-spacing: -.02em; font-weight: 800; }
+summary .when { font: 12.5px "Space Mono", monospace; color: var(--muted); }
+summary .count { margin-left: auto; font: 12.5px "Space Mono", monospace; color: var(--muted); }
+summary .count.done { color: var(--green); }
+h3 { font-size: 17px; margin: 22px 0 6px; font-weight: 600; color: var(--soft); }
+p, li { color: var(--soft); }
+p.note { margin: 6px 0 10px; }
+strong { color: var(--text); font-weight: 600; }
+label.it { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; cursor: pointer; }
+label.it input { appearance: none; -webkit-appearance: none; flex: none; width: 20px; height: 20px; margin: 2px 0 0; border: 1.5px solid var(--muted); border-radius: 5px; cursor: pointer; display: grid; place-content: center; }
+label.it input:checked { background: var(--green); border-color: var(--green); }
+label.it input:checked::after { content: ""; width: 10px; height: 6px; border: solid #151926; border-width: 0 0 2.5px 2.5px; transform: translateY(-1px) rotate(-45deg); }
+label.it span { color: var(--text); }
+label.it input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--red); }
+label.it small { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; }
+label.it input:checked + span small { text-decoration: none; }
+ul.rules { margin: 6px 0 0; padding-left: 0; list-style: none; }
+ul.rules li { padding: 5px 0 5px 22px; position: relative; }
+ul.rules li::before { content: "-"; position: absolute; left: 4px; color: var(--muted); }
+.hour { display: grid; grid-template-columns: 64px 1fr; gap: 0 12px; }
+.hour .h { font: 13px/2.6 "Space Mono", monospace; color: var(--green); }
+.idea { padding: 12px 0; border-bottom: 1px dashed var(--hair); }
+.idea:last-child { border-bottom: 0; }
+.idea .t { display: flex; gap: 12px; align-items: baseline; }
+.idea .t b { font-weight: 600; color: var(--text); }
+.idea .n { font: 12.5px "Space Mono", monospace; color: var(--muted); flex: none; width: 24px; }
+.idea .hook { font: 13.5px "Space Mono", monospace; color: var(--green); margin: 4px 0 2px 36px; }
+.idea p { margin: 2px 0 0 36px; }
+.vid { padding: 12px 0; border-bottom: 1px dashed var(--hair); }
+.vid:last-child { border-bottom: 0; }
+.vid .meta { font: 12.5px "Space Mono", monospace; color: var(--muted); margin: 0 0 4px 32px; }
+.vid p { margin: 2px 0 0 32px; }
+.draft { position: relative; margin: 10px 0 18px; }
+.draft .lbl { font: 12.5px "Space Mono", monospace; color: var(--muted); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+.draft pre { margin: 0; white-space: pre-wrap; background: var(--bg2); border: 1px solid var(--hair); border-radius: 10px; padding: 14px 16px; font: 15px/1.55 "Bricolage Grotesque", system-ui, sans-serif; color: var(--text); }
+.draft button { font: 12px "Space Mono", monospace; background: none; border: 1px solid var(--hair); color: var(--soft); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.draft button.ok { color: var(--green); border-color: var(--green); }
+.warn { border-left: 3px solid var(--red); padding: 2px 0 2px 14px; margin: 12px 0; }
+.foot { margin-top: 40px; font: 12.5px "Space Mono", monospace; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.foot button { font: inherit; background: none; border: 0; color: var(--muted); text-decoration: underline; cursor: pointer; padding: 0; }
+@media (max-width: 560px) { main { padding-top: 28px; } summary h2 { font-size: 21px; } .hour { grid-template-columns: 52px 1fr; } }
+</style>
+</head>
+<body>
+<main>
+
+<div class="kick">Flowlet · plan de lanzamiento</div>
+<h1>Lanzamiento Android<br><b>lunes 30 nov, 18:00</b></h1>
+<p class="lead">Todo lo que hay que hacer de hoy al 30, el día hora a hora, los vídeos, las ideas de TikTok y los posts ya escritos. Las casillas se guardan en este navegador. El lanzamiento de iPhone va aparte, al final, y es donde van Product Hunt y Show HN.</p>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><div class="num" id="num">0 / 0</div></div>
+
+<nav class="toc">
+  <a href="#antes">Antes de nada</a><a href="#s1">Semana 1</a><a href="#s2">Semana 2</a><a href="#s3">Semana 3</a><a href="#s4">Semana 4</a><a href="#dia">Día D</a><a href="#despues">Después</a><a href="#videos">Vídeos</a><a href="#tiktok">Ideas TikTok</a><a href="#posts">Posts</a><a href="#faq">Respuestas</a><a href="#ios">Lanzamiento iPhone</a>
+</nav>
+
+<!-- ============================================================ -->
+<details open id="antes">
+<summary><h2>Antes de nada</h2></summary>
+<ul class="rules">
+  <li><strong>Android ya está en Play desde el 26-oct.</strong> El 30 no publicas nada: es el día en el que haces todo el ruido a la vez.</li>
+  <li><strong>El 30-nov es Cyber Monday</strong> (Black Friday el 27). Ese día los emails y los anuncios se pierden. Redes, comunidades y mensajes personales funcionan igual.</li>
+  <li><strong>Product Hunt y Show HN se guardan para el lanzamiento de iPhone</strong>, porque su público es muy de iPhone. Si iOS se va más allá de enero, haz PH solo con Android.</li>
+  <li>Un enlace por canal: <strong>useflowlet.com/?ref=tiktok</strong>, ?ref=ig, ?ref=x, ?ref=li, ?ref=reddit, ?ref=prensa... Así ves en la pestaña de visitas del dash qué canal funciona.</li>
+</ul>
+<h3>Reglas que no se rompen</h3>
+<ul class="rules">
+  <li>Nada de música ni imágenes de stock. Si usas Vivaldi, el crédito CC BY-SA va en la descripción.</li>
+  <li>Nunca horas gratis a cambio de reseñas de Play. Nada de cuentas falsas.</li>
+  <li>No decir que Gboard se corta cuando haces una pausa: ya no pasa.</li>
+  <li>No decir que Wispr Flow no está en Europa: se puede descargar. Compara precio y resultado, nada más.</li>
+  <li>La skin Poké Ball no sale en anuncios ni en vídeos promo.</li>
+  <li>Con los creadores, siempre #publi o "colaboración pagada".</li>
+  <li>Nada de prometer algo que la app no hace. No traduce: escribe en el idioma en el que hablas.</li>
+</ul>
+</details>
+
+<!-- ============================================================ -->
+<details open id="s1">
+<summary><h2>Semana 1</h2><span class="when">2-8 nov · base</span><span class="count"></span></summary>
+<h3>Producto</h3>
+<label class="it"><input type="checkbox"><span>Compra real de Pro y del pack de 10 h con tu tarjeta<small>El servidor nunca ha visto un token Pro real. Si el 30 fallan los pagos, pierdes justo esas ventas.</small></span></label>
+<label class="it"><input type="checkbox"><span>Probar el onboarding nuevo (vc168) en tu Xiaomi y en otro Android (un Samsung de alguien)</span></label>
+<label class="it"><input type="checkbox"><span>vc168 aprobada en producción (mirar la consola)</span></label>
+<label class="it"><input type="checkbox"><span>Cerrar los pendientes de seguridad que tienes apuntados (Integrity, claves)</span></label>
+<h3>Gente</h3>
+<label class="it"><input type="checkbox"><span>Lista de 50 personas con nombre y canal (WhatsApp, IG, LinkedIn)<small>Amigos, familia, TU/e, Maastricht, beta testers. Escribirás a cada uno en privado, nunca en un grupo.</small></span></label>
+<label class="it"><input type="checkbox"><span>Pedir testimonios a los ~16 beta testers<small>Una frase o un vídeo de 10 s, con permiso para usarlo. Pregúntales qué usan más.</small></span></label>
+<label class="it"><input type="checkbox"><span>Mandar DMs a los creadores de tu lista (dkealvaro.github.io/flowlet-creators)<small>Plantilla en Posts. Código FLOW-NOMBRE, pagas por cada persona que lo use, no por post.</small></span></label>
+<label class="it"><input type="checkbox"><span>Lista de prensa con emails<small>ES: Xataka Android, Andro4all, El Androide Libre, Genbeta, Hipertextual. NL: Androidworld, Android Planet. EN (difícil): Android Police, Android Authority.</small></span></label>
+<h3>Contenido</h3>
+<label class="it"><input type="checkbox"><span>Cuentas listas: TikTok (tú a cámara ES + demo ES + demo EN), Instagram, YouTube Shorts, X, LinkedIn<small>Bio con el enlace ?ref de cada una.</small></span></label>
+<label class="it"><input type="checkbox"><span>Escribir las respuestas preparadas (sección Respuestas)</span></label>
+<label class="it"><input type="checkbox"><span>Sesión de grabación: 30 dictados reales en situaciones reales (pantalla + cámara)<small>Cocina, calle, sofá, escritorio. De aquí salen casi todos los shorts y los vídeos grandes.</small></span></label>
+<label class="it"><input type="checkbox"><span>Primer post para contar el proyecto mientras lo haces (X + LinkedIn): "en un mes lanzo Flowlet", qué es y por qué</span></label>
+</details>
+
+<!-- ============================================================ -->
+<details id="s2">
+<summary><h2>Semana 2</h2><span class="when">9-15 nov · vídeos y escaparate</span><span class="count"></span></summary>
+<h3>Vídeos (detalle en la sección Vídeos)</h3>
+<label class="it"><input type="checkbox"><span>Demo principal 30-45 s (9:16 y 16:9)</span></label>
+<label class="it"><input type="checkbox"><span>Cómo funciona 60-90 s (16:9)</span></label>
+<label class="it"><input type="checkbox"><span>Flowlet vs dictado de Google</span></label>
+<label class="it"><input type="checkbox"><span>Flowlet vs Wispr Flow</span></label>
+<label class="it"><input type="checkbox"><span>Fundador a cámara, 60 s</span></label>
+<label class="it"><input type="checkbox"><span>Empezar los shorts: uno al día en cada cuenta hasta el lanzamiento y 4 semanas después</span></label>
+<h3>Escaparate</h3>
+<label class="it"><input type="checkbox"><span>Capturas nuevas de Play en EN y ES<small>Las de ahora enseñan el Home viejo. Es lo primero que ve quien llega a la ficha.</small></span></label>
+<label class="it"><input type="checkbox"><span>Vídeo de la ficha de Play regrabado con el build actual (uno ES, uno EN)</span></label>
+<label class="it"><input type="checkbox"><span>Descripción corta y larga de Play revisadas (vender "escribe lo que querías decir")</span></label>
+<label class="it"><input type="checkbox"><span>Imagen OG de 1200×630 para la web<small>Ahora usa la de 1024×500 y X y LinkedIn la recortan mal.</small></span></label>
+<label class="it"><input type="checkbox"><span>Página /press: logo SVG claro y oscuro, mascota, capturas, descripción EN/ES, foto tuya, vídeo, contacto</span></label>
+<label class="it"><input type="checkbox"><span>Página "Flowlet vs Wispr Flow" en la web (y si da tiempo, "vs dictado de Google")</span></label>
+<label class="it"><input type="checkbox"><span>Search Console + enviar el sitemap</span></label>
+<label class="it"><input type="checkbox"><span>Fichas de Play en de / fr / pt-BR / it / nl<small>Opcional. Más búsquedas en Play.</small></span></label>
+<label class="it"><input type="checkbox"><span>Post #2 del proyecto: "Google me rechazó la app 2 veces y por qué"</span></label>
+</details>
+
+<!-- ============================================================ -->
+<details id="s3">
+<summary><h2>Semana 3</h2><span class="when">16-22 nov · gente y textos</span><span class="count"></span></summary>
+<label class="it"><input type="checkbox"><span>Email a prensa con embargo hasta el 30-nov 09:00 (hacia el 20-nov)<small>Plantilla en Posts. Ofrece acceso gratis para probarla.</small></span></label>
+<label class="it"><input type="checkbox"><span>Cerrar creadores: quién publica, qué día y con qué código</span></label>
+<label class="it"><input type="checkbox"><span>Repasar y adaptar todos los posts del día (sección Posts)</span></label>
+<label class="it"><input type="checkbox"><span>Groq: mirar los límites de tu plan (peticiones por minuto de Whisper y del limpiador) y subir de nivel si hace falta</span></label>
+<label class="it"><input type="checkbox"><span>Prueba de carga: 20-30 dictados a la vez contra el proxy</span></label>
+<label class="it"><input type="checkbox"><span>Pedir reseña de Play dentro de la app tras ~5 dictados buenos (si no está hecho)<small>Nunca después de un fallo.</small></span></label>
+<label class="it"><input type="checkbox"><span>Código de lanzamiento opcional (p. ej. +30 min) con tu sistema de códigos</span></label>
+<label class="it"><input type="checkbox"><span>Post #3 del proyecto: el bug de "Gracias por ver el vídeo"</span></label>
+</details>
+
+<!-- ============================================================ -->
+<details id="s4">
+<summary><h2>Semana 4</h2><span class="when">23-29 nov · ensayo</span><span class="count"></span></summary>
+<label class="it"><input type="checkbox"><span>23-nov: mensaje personal a la lista de 50<small>"El lunes 30 saco Flowlet, ¿me echas una mano ese día?" Que sepan qué tienen que hacer: probarla, comentar, compartir.</small></span></label>
+<label class="it"><input type="checkbox"><span>26-27 nov: teaser con cuenta atrás en todas las cuentas</span></label>
+<label class="it"><input type="checkbox"><span>27-nov: revisar servidor, alertas a tu correo, kill-switches y saldo de Groq</span></label>
+<label class="it"><input type="checkbox"><span>28-nov: confirmar con creadores y prensa la hora del 30</span></label>
+<label class="it"><input type="checkbox"><span>29-nov: dejar programado lo que se pueda (LinkedIn, X, IG). Enlaces ?ref copiados. Vídeos exportados en los dos formatos.</span></label>
+<label class="it"><input type="checkbox"><span>29-nov: probar una vez más el camino completo: Play, instalar, onboarding, dictar, comprar</span></label>
+</details>
+
+<!-- ============================================================ -->
+<details id="dia">
+<summary><h2>Día D</h2><span class="when">lun 30 nov · hora de Madrid</span><span class="count"></span></summary>
+<p class="note">Regla del día: contestar cada comentario en menos de 15 minutos. Los algoritmos de todas las redes premian la conversación en la primera hora.</p>
+<div class="hour"><div class="h">08:30</div><label class="it"><input type="checkbox"><span>Comprobar: ficha de Play, web, dash abierto, proxy y alertas</span></label></div>
+<div class="hour"><div class="h">09:00</div><label class="it"><input type="checkbox"><span>Se levanta el embargo de prensa. Post de LinkedIn (link en el primer comentario)</span></label></div>
+<div class="hour"><div class="h">09:30</div><label class="it"><input type="checkbox"><span>Mensajes uno a uno a la lista de 50, con el enlace al post de LinkedIn y a Play</span></label></div>
+<div class="hour"><div class="h">12:00</div><label class="it"><input type="checkbox"><span>Hilo de X en español</span></label></div>
+<div class="hour"><div class="h">15:30</div><label class="it"><input type="checkbox"><span>Reddit (mañana en EEUU): r/androidapps y luego r/SideProject. Leer antes las reglas de cada sub</span></label></div>
+<div class="hour"><div class="h">18:00</div><label class="it"><input type="checkbox"><span>Vídeo principal en TikTok, Reels y Shorts, en las 3 cuentas</span></label></div>
+<div class="hour"><div class="h">18:00</div><label class="it"><input type="checkbox"><span>Hilo de X en inglés + post en el grupo de los 400 founders + stories de IG</span></label></div>
+<div class="hour"><div class="h">18:15</div><label class="it"><input type="checkbox"><span>Mensaje a quienes se apuntaron por IG o por teléfono</span></label></div>
+<div class="hour"><div class="h">18-24</div><label class="it"><input type="checkbox"><span>Contestar todo: comentarios, DMs, hello@useflowlet.com, reseñas de Play</span></label></div>
+<div class="hour"><div class="h">22:00</div><label class="it"><input type="checkbox"><span>Story de agradecimiento con un número real del día (personas, dictados)</span></label></div>
+<div class="hour"><div class="h">todo</div><label class="it"><input type="checkbox"><span>Vigilar dash y proxy: errores, latencia, altas sospechosas</span></label></div>
+</details>
+
+<!-- ============================================================ -->
+<details id="despues">
+<summary><h2>Después</h2><span class="when">1-7 dic y siguientes</span><span class="count"></span></summary>
+<label class="it"><input type="checkbox"><span>Contestar todas las reseñas de Play, también las malas</span></label>
+<label class="it"><input type="checkbox"><span>Arreglar lo que haya salido y sacar versión con notas claras</span></label>
+<label class="it"><input type="checkbox"><span>Directorios, uno o dos por día: AlternativeTo (como alternativa a Wispr Flow), Uneed, Microlaunch, Peerlist, Fazier, SaaSHub, There's An AI For That, Indie Hackers</span></label>
+<label class="it"><input type="checkbox"><span>Post "qué pasó en el lanzamiento" con números reales (X + LinkedIn)</span></label>
+<label class="it"><input type="checkbox"><span>Update a posibles inversores con los números (tienes el deck)</span></label>
+<label class="it"><input type="checkbox"><span>Repaso: qué ?ref trajo gente, cuántos se registraron y dictaron, qué short funcionó</span></label>
+<label class="it"><input type="checkbox"><span>Repetir el formato del short que mejor funcionó; seguir a uno al día 4 semanas</span></label>
+<label class="it"><input type="checkbox"><span>Pagar solo cuando haya algo que funciona en orgánico: Spark Ads de TikTok sobre el mejor short, Google App Campaign con 10-20 €/día</span></label>
+</details>
+
+<!-- ============================================================ -->
+<details id="videos">
+<summary><h2>Vídeos</h2><span class="when">los grandes</span><span class="count"></span></summary>
+<p class="note">Todo grabado de verdad, con la app real. Sin zoom animado, sin adornos, la burbuja con sus estados de verdad (azul quieta, roja escucha, amarilla piensa). Subtítulos grandes. Los 2 primeros segundos son el gancho.</p>
+
+<div class="vid"><label class="it"><input type="checkbox"><span><strong>1. Demo principal</strong></span></label>
+<div class="meta">30-45 s · 9:16 y 16:9 · TikTok, Reels, Shorts, X, LinkedIn, web</div>
+<p>WhatsApp abierto. Tocas la burbuja y hablas como hablas, con una corrección a mitad ("el jueves, no, espera, el viernes a las 8"). La burbuja piensa y el mensaje cae limpio. Lo mandas. Segundo caso rápido en Gmail. Cierre: Flowlet, 30 min gratis, Google Play.</p></div>
+
+<div class="vid"><label class="it"><input type="checkbox"><span><strong>2. Cómo funciona</strong></span></label>
+<div class="meta">60-90 s · 16:9 · YouTube, web, prensa, Product Hunt</div>
+<p>Instalar desde Play, el onboarding explicando cada permiso en una frase (sobre todo accesibilidad: "para escribir en el campo donde estás"), la burbuja, dictar en 3 apps distintas, Palabras tuyas, precio. Quita el miedo a los permisos, que es la pregunta que te harán seguro.</p></div>
+
+<div class="vid"><label class="it"><input type="checkbox"><span><strong>3. Flowlet vs dictado de Google</strong></span></label>
+<div class="meta">20-40 s · 9:16 · el más útil para el público general</div>
+<p>Pantalla partida, el mismo audio largo con correcciones y muletillas. Google lo escribe palabra por palabra; Flowlet escribe el mensaje final. Una toma, sin cortes.</p></div>
+
+<div class="vid"><label class="it"><input type="checkbox"><span><strong>4. Flowlet vs Wispr Flow</strong></span></label>
+<div class="meta">30-60 s · 9:16 y 16:9 · X, Reddit, página comparativa</div>
+<p>Dos móviles lado a lado, los mismos 3 dictados, una toma con cronómetro visible. Resultado de cada uno y al final el precio (mira el suyo el día que grabes y pon la fecha). Su nombre sí, su logo no. Si gana en algo, no lo escondas.</p></div>
+
+<div class="vid"><label class="it"><input type="checkbox"><span><strong>5. Fundador</strong></span></label>
+<div class="meta">60 s · 9:16 y 16:9 · LinkedIn, X, primer comentario de PH</div>
+<p>Quién eres, por qué la hiciste (querías esto en Android y a precio europeo), una demo de 10 s, y la invitación a probarla y decirte qué falla.</p></div>
+
+<div class="vid"><label class="it"><input type="checkbox"><span><strong>6. Teaser con cuenta atrás</strong></span></label>
+<div class="meta">10-15 s · 9:16 · 26-29 nov</div>
+<p>Sale del teaser v2 o del couch v4 que ya tienes, con "30 de noviembre" al final.</p></div>
+
+<div class="vid"><label class="it"><input type="checkbox"><span><strong>7. Testimonios</strong></span></label>
+<div class="meta">20-30 s · 9:16 · semana del lanzamiento</div>
+<p>3-4 beta testers diciendo en una frase para qué la usan. Solo personas reales y con su permiso.</p></div>
+
+<div class="vid"><label class="it"><input type="checkbox"><span><strong>8. Vídeo de la ficha de Play</strong></span></label>
+<div class="meta">30 s · 16:9 · ES y EN</div>
+<p>Regrabado con el build actual: onboarding nuevo y skins.</p></div>
+</details>
+
+<!-- ============================================================ -->
+<details id="tiktok">
+<summary><h2>Ideas TikTok</h2><span class="when">Reels y Shorts también</span></summary>
+<p class="note">Formato: 10-20 s, gancho en texto en los 2 primeros segundos, una sola idea por vídeo. Los ganchos están en español; en la cuenta EN, igual traducido. Todo con dictados de verdad.</p>
+
+<div class="idea"><div class="t"><span class="n">01</span><b>Serie fija: lo que dije / lo que se envió</b></div><div class="hook">"Lo que dije vs lo que se envió"</div><p>Arriba la transcripción literal con lo que sobra tachado en rojo, como en la web; abajo el mensaje final. Se puede repetir cada día con un dictado distinto.</p></div>
+<div class="idea"><div class="t"><span class="n">02</span><b>Cambio de opinión a mitad de frase</b></div><div class="hook">"Cambio de idea 3 veces y lo pilla"</div><p>"Quedamos el jueves, no, espera, mejor el viernes, a las 8" y sale "Quedamos el viernes a las 8".</p></div>
+<div class="idea"><div class="t"><span class="n">03</span><b>Audios de 3 minutos</b></div><div class="hook">"Deja de mandar audios de 3 minutos"</div><p>Un rollo largo se convierte en 2 líneas en WhatsApp.</p></div>
+<div class="idea"><div class="t"><span class="n">04</span><b>Spanglish</b></div><div class="hook">"Hablo en spanglish y lo escribe bien"</div><p>"Mándale el deck al client antes del meeting de mañana".</p></div>
+<div class="idea"><div class="t"><span class="n">05</span><b>Recado para otro</b></div><div class="hook">"Le hablo como a un asistente"</div><p>"Dile a mi madre que llego tarde y que no se preocupe" y sale el mensaje a tu madre, escrito como si se lo dijeras tú.</p></div>
+<div class="idea"><div class="t"><span class="n">06</span><b>Decir que no sin quedar mal</b></div><div class="hook">"Cómo decir que no sin quedar fatal"</div><p>"Dile a Pablo que no puedo ir, que no suene borde."</p></div>
+<div class="idea"><div class="t"><span class="n">07</span><b>Manos ocupadas</b></div><div class="hook">"POV: contestas 5 mensajes mientras cocinas"</div><p>Cámara en la cocina, móvil apoyado, cinco mensajes seguidos.</p></div>
+<div class="idea"><div class="t"><span class="n">08</span><b>Carrera: teclear vs hablar</b></div><div class="hook">"Escribirlo: 48 s. Decirlo: 9 s."</div><p>El mismo mensaje dos veces con cronómetro. Los números, los que salgan de verdad.</p></div>
+<div class="idea"><div class="t"><span class="n">09</span><b>Muletillas fuera</b></div><div class="hook">"Hablo fatal y escribe bien"</div><p>"Eh, o sea, en plan, ¿sabes?, es que..." y sale limpio.</p></div>
+<div class="idea"><div class="t"><span class="n">10</span><b>Ideas a las 2 de la mañana</b></div><div class="hook">"Mi cabeza a las 2 AM vs mi nota"</div><p>Idea desordenada en voz alta que acaba como una nota clara en la app de notas.</p></div>
+<div class="idea"><div class="t"><span class="n">11</span><b>Prompts por voz</b></div><div class="hook">"Ya no escribo prompts"</div><p>Dictar un prompt largo en la app de ChatGPT o Claude.</p></div>
+<div class="idea"><div class="t"><span class="n">12</span><b>Email formal</b></div><div class="hook">"Email al profe sin sufrir"</div><p>Hablas normal y sale formal, con el tono formal puesto.</p></div>
+<div class="idea"><div class="t"><span class="n">13</span><b>Palabras tuyas</b></div><div class="hook">"Por fin escribe bien su nombre"</div><p>Un nombre raro de un amigo o una marca: antes mal, después de añadirlo, bien.</p></div>
+<div class="idea"><div class="t"><span class="n">14</span><b>En todas las apps</b></div><div class="hook">"Funciona en todas tus apps"</div><p>WhatsApp, Gmail, Notas, LinkedIn, ChatGPT: cinco apps en 10 s.</p></div>
+<div class="idea"><div class="t"><span class="n">15</span><b>Mensaje a un grupo</b></div><div class="hook">"Organizar una cena sin escribir nada"</div><p>"A todos: cena el sábado en casa de Marta a las 9, no, a las 9 y media, traed bebida."</p></div>
+<div class="idea"><div class="t"><span class="n">16</span><b>Dictado de Google vs Flowlet</b></div><div class="hook">"El mismo audio en las dos"</div><p>Versión corta del vídeo grande 3.</p></div>
+<div class="idea"><div class="t"><span class="n">17</span><b>Precio</b></div><div class="hook">"Lo mismo que Wispr Flow, por 5,99 €"</div><p>Versión corta del vídeo grande 4. Solo con el resultado en pantalla, que lo demuestre.</p></div>
+<div class="idea"><div class="t"><span class="n">18</span><b>Mis amigos intentan romperla</b></div><div class="hook">"Mis amigos intentan romper mi app"</div><p>Hablar rapidísimo, cambiar de idea tres veces, mezclar idiomas. Si falla alguna, también vale: es real.</p></div>
+<div class="idea"><div class="t"><span class="n">19</span><b>Mi madre la prueba</b></div><div class="hook">"Mi madre probando dictado con IA"</div><p>La reacción de verdad, con su permiso.</p></div>
+<div class="idea"><div class="t"><span class="n">20</span><b>Por la calle</b></div><div class="hook">"Dictando con ruido de calle"</div><p>Andando, con tráfico de fondo. Solo si sale bien de verdad.</p></div>
+<div class="idea"><div class="t"><span class="n">21</span><b>El bug de Whisper</b></div><div class="hook">"Mi IA escribía 'Gracias por ver el vídeo' cuando me callaba"</div><p>A cámara: qué pasaba y cómo lo arreglaste. Funciona con gente que programa.</p></div>
+<div class="idea"><div class="t"><span class="n">22</span><b>Origen</b></div><div class="hook">"Soy estudiante y he hecho la app que yo quería"</div><p>A cámara, 20 s, con la app de fondo.</p></div>
+<div class="idea"><div class="t"><span class="n">23</span><b>Elige tu burbuja</b></div><div class="hook">"Mi burbuja, mi estilo"</div><p>Cambiar entre Flow, Capsule, Apex y Chomp. Sin la Poké Ball.</p></div>
+<div class="idea"><div class="t"><span class="n">24</span><b>Responder comentarios con vídeo</b></div><div class="hook">"¿Y el dictado de Google qué?"</div><p>Usa la función de responder a un comentario con un vídeo. Cada duda buena es un short gratis.</p></div>
+</details>
+
+<!-- ============================================================ -->
+<details id="posts">
+<summary><h2>Posts</h2><span class="when">borradores listos para adaptar</span></summary>
+<p class="note">Cámbialos a tu manera. Cambia ?ref según el canal. Los datos que salen (30 min gratis, 0,99 €/h, Pro 5,99 €/mes, 12 idiomas, Android 8+) son los de la web hoy.</p>
+
+<div class="draft"><div class="lbl">LinkedIn · EN · 09:00<button>copiar</button></div><pre>Today I'm launching Flowlet on Android.
+
+For the last months I've been building a voice dictation app that writes what you meant, not every word you said.
+
+A small bubble sits on top of any app. Tap it and talk the way you talk: change your mind halfway, say "um" ten times, ramble for a minute. Flowlet turns it into the message you wanted to send and puts it in the text field.
+
+"Let's meet Thursday, no wait, Friday at 8" becomes "Let's meet Friday at 8."
+"Tell Carlos I'll be late and not to worry" becomes a message to Carlos.
+A one-minute ramble becomes the two lines you actually wanted to write.
+
+Apps like Wispr Flow showed how good this can feel. I wanted the same on Android, in 12 languages, at a European price.
+
+30 free minutes, then from 0,99 € per hour or 5,99 € a month. iPhone is coming soon.
+
+If you try it, tell me what breaks. Link in the first comment.</pre></div>
+
+<div class="draft"><div class="lbl">LinkedIn · ES · 09:00<button>copiar</button></div><pre>Hoy lanzo Flowlet en Android.
+
+Llevo meses haciendo una app de dictado por voz que escribe lo que querías decir, no cada palabra que dijiste.
+
+Tienes una burbuja encima de cualquier app. La tocas y hablas como hablas: cambias de idea a mitad, dices "eh" diez veces, te enrollas un minuto. Flowlet lo convierte en el mensaje que querías mandar y lo deja en el campo de texto.
+
+"Quedamos el jueves, no, espera, el viernes a las 8" se queda en "Quedamos el viernes a las 8."
+"Dile a Carlos que llego tarde y que no se preocupe" sale como un mensaje a Carlos.
+Un rollo de un minuto acaba en las dos líneas que de verdad querías escribir.
+
+Apps como Wispr Flow enseñaron lo bien que puede funcionar esto. Yo lo quería en Android, en 12 idiomas y a precio europeo.
+
+30 minutos gratis, luego desde 0,99 € la hora o 5,99 € al mes. iPhone muy pronto.
+
+Si la pruebas, dime qué falla. Enlace en el primer comentario.</pre></div>
+
+<div class="draft"><div class="lbl">X · hilo · EN · 18:00<button>copiar</button></div><pre>1/ I built Flowlet: you talk, it writes what you meant.
+
+A small bubble sits on top of any Android app. Tap it, ramble, change your mind halfway, and a clean message lands in the text field.
+
+Out today on Google Play. [video]
+
+2/ What it fixes:
+"Thursday, no wait, Friday at 8" becomes "Friday at 8."
+The ums and likes are gone.
+A two-minute ramble becomes the two lines you wanted to send.
+
+3/ Works anywhere you can type: WhatsApp, Gmail, Notes, ChatGPT. 12 languages, and you can mix them.
+
+4/ 30 free minutes. Then 0,99 € per hour or Pro at 5,99 €/month. iPhone soon.
+
+5/ I'm a student in Eindhoven and built it because I wanted it. Tell me what breaks, I read everything.
+useflowlet.com/?ref=x</pre></div>
+
+<div class="draft"><div class="lbl">X · hilo · ES · 12:00<button>copiar</button></div><pre>1/ Hoy saco Flowlet: hablas y escribe lo que querías decir.
+
+Una burbuja encima de cualquier app de Android. La tocas, te enrollas, cambias de idea a mitad, y te deja el mensaje limpio en el campo de texto.
+
+Ya en Google Play. [vídeo]
+
+2/ Lo que arregla:
+"El jueves, no, espera, el viernes a las 8" se queda en "El viernes a las 8."
+Fuera los "eh", "o sea", "en plan".
+Un audio de dos minutos se convierte en las dos líneas que querías mandar.
+
+3/ Funciona donde puedas escribir: WhatsApp, Gmail, Notas, ChatGPT. 12 idiomas, y puedes mezclarlos.
+
+4/ 30 minutos gratis. Luego 0,99 € la hora o Pro a 5,99 € al mes. iPhone muy pronto.
+
+5/ La he hecho yo, desde Eindhoven, porque la quería. Decidme qué falla, lo leo todo.
+useflowlet.com/es/?ref=x</pre></div>
+
+<div class="draft"><div class="lbl">TikTok / Reels / Shorts · texto del post<button>copiar</button></div><pre>Hablas como hablas y se escribe lo que querías decir. Flowlet, gratis 30 min en Google Play. Enlace en el perfil.
+#productividad #android #apps #ia #dictado</pre></div>
+
+<div class="draft"><div class="lbl">Reddit · r/androidapps · EN · 15:30<button>copiar</button></div><pre>Title: I made a dictation app that writes what you meant, not every word you said
+
+Hi all, I've been building Flowlet for the last few months and it's out on Google Play today.
+
+How it works: a small bubble floats over any app. Tap it and talk. It listens, then writes the message you meant into the text field you're in. If you say "Thursday, no wait, Friday at 8", you get "Friday at 8". Filler words go away, rambles get shorter, and you can mix languages (12 supported).
+
+Permissions, since people always ask: microphone (obviously), display over other apps (the bubble), and accessibility (to put the text into the field you're typing in). [one honest line on what is stored and for how long]
+
+Pricing: 30 free minutes, then 0,99 € per hour, 9,99 € for 10 h, or 5,99 €/month. No subscription needed to try it.
+
+I'd love feedback on where it gets things wrong. Short demo: [video]
+Play Store: [link]</pre></div>
+
+<div class="draft"><div class="lbl">Grupo de los 400 founders · ES · 18:00<button>copiar</button></div><pre>Hola a todos. Hoy lanzo Flowlet en Android: dictado por voz que escribe lo que querías decir.
+
+Tienes una burbuja encima de cualquier app, hablas como hablas (con tus "eh" y tus "no, espera") y te deja el mensaje limpio en el campo de texto. 30 minutos gratis.
+
+Busco feedback sincero, sobre todo de lo que falla. Y si conocéis a alguien que se pase el día escribiendo mensajes o emails desde el móvil, os lo agradecería mucho.
+
+useflowlet.com/es/?ref=founders</pre></div>
+
+<div class="draft"><div class="lbl">WhatsApp a amigos · ES · uno a uno<button>copiar</button></div><pre>Ey [nombre]! Hoy saco por fin la app en la que llevo meses: Flowlet. Hablas y te escribe el mensaje limpio, en cualquier app. Tiene 30 min gratis: [link Play]
+
+Si la pruebas dime qué te falla. Y si te mola, que comentes o compartas el vídeo me ayuda un montón: [link vídeo]</pre></div>
+
+<div class="draft"><div class="lbl">Email a prensa · ES · ~20 nov<button>copiar</button></div><pre>Asunto: Flowlet, dictado por voz que escribe lo que querías decir (sale el 30-nov, embargo)
+
+Hola [nombre]:
+
+Soy Álvaro Menéndez, ingeniero español estudiando IA en Eindhoven. El lunes 30 de noviembre lanzo Flowlet, una app de dictado por voz para Android.
+
+Lo que la diferencia del dictado del teclado: no escribe palabra por palabra, escribe el mensaje que querías mandar. Si dices "el jueves, no, espera, el viernes a las 8", escribe "el viernes a las 8". Quita las muletillas, resume los rollos y funciona en cualquier app con una burbuja flotante.
+
+En EEUU, Wispr Flow hace algo parecido y cuesta 15 $ al mes. Flowlet cuesta 5,99 € al mes, con 30 minutos gratis para probarla.
+
+Vídeo de 40 s: [link]
+Kit de prensa (capturas, logo, textos): useflowlet.com/press
+Ya está en Google Play: [link]
+
+Si quieres probarla a fondo te activo horas gratis en tu cuenta. Embargo hasta el 30-nov a las 09:00.
+
+Un saludo,
+Álvaro
+hello@useflowlet.com</pre></div>
+
+<div class="draft"><div class="lbl">Email a prensa · EN · ~20 nov<button>copiar</button></div><pre>Subject: Flowlet, voice dictation that writes what you meant (launches Nov 30, embargoed)
+
+Hi [name],
+
+I'm Álvaro, a Spanish engineer studying AI in Eindhoven. On Monday 30 November I'm launching Flowlet, a voice dictation app for Android.
+
+Unlike keyboard dictation, it doesn't type every word. It writes the message you meant: "Thursday, no wait, Friday at 8" comes out as "Friday at 8". It drops filler words, shortens rambles and works in any app through a floating bubble.
+
+It costs 5,99 € a month (Wispr Flow is $15), with 30 free minutes to try it.
+
+40-second video: [link]
+Press kit: useflowlet.com/press
+Google Play: [link]
+
+Happy to add free hours to your account if you want to test it properly. Embargo until Nov 30, 09:00 CET.
+
+Best,
+Álvaro
+hello@useflowlet.com</pre></div>
+
+<div class="draft"><div class="lbl">DM a creador · ES<button>copiar</button></div><pre>Hola [nombre], soy Álvaro. He hecho Flowlet, una app de dictado para Android: hablas como hablas y escribe lo que querías decir, en cualquier app.
+
+Creo que encaja con lo que cuentas sobre [tema]. ¿Te apetece probarla? Te activo horas gratis.
+
+Si te gusta y quieres hablar de ella, te hago un código tuyo (FLOW-[NOMBRE]) que da 30 minutos extra a tu gente, y te pago por cada persona que lo use. Sin compromiso, y si no te convence, me encantaría saber por qué.</pre></div>
+</details>
+
+<!-- ============================================================ -->
+<details id="faq">
+<summary><h2>Respuestas</h2><span class="when">lo que te van a preguntar</span><span class="count"></span></summary>
+<p class="note">Escríbelas antes y tenlas a mano. Las que llevan [tú] no las puedo rellenar yo: tienen que ser exactas.</p>
+<label class="it"><input type="checkbox"><span>¿Guardáis mi audio o lo que dicto?<small>[tú] Qué se guarda, cuánto tiempo y quién lo ve. Será la pregunta número uno en Reddit. Respuesta corta y verdadera.</small></span></label>
+<label class="it"><input type="checkbox"><span>¿Por qué pide accesibilidad?<small>Para escribir el texto en el campo donde estás. Una frase, sin rodeos.</small></span></label>
+<label class="it"><input type="checkbox"><span>¿En qué se diferencia del dictado de Google?<small>Google escribe palabra por palabra; Flowlet escribe el mensaje que querías mandar.</small></span></label>
+<label class="it"><input type="checkbox"><span>¿Y de Wispr Flow?<small>La misma idea, en Android, a 5,99 €/mes. Sin atacarles.</small></span></label>
+<label class="it"><input type="checkbox"><span>¿Qué idiomas?<small>12, y se pueden mezclar.</small></span></label>
+<label class="it"><input type="checkbox"><span>¿Cuánto cuesta?<small>30 min gratis. 1 h 0,99 €, 10 h 9,99 €, Pro 5,99 €/mes con 30 h, o con tus propias claves 24 € una vez.</small></span></label>
+<label class="it"><input type="checkbox"><span>¿Y en iPhone?<small>Muy pronto.</small></span></label>
+<label class="it"><input type="checkbox"><span>¿Funciona sin internet?<small>No.</small></span></label>
+<label class="it"><input type="checkbox"><span>¿Qué Android necesito?<small>Android 8 o superior.</small></span></label>
+<label class="it"><input type="checkbox"><span>¿Traduce?<small>No, escribe en el idioma en el que hablas.</small></span></label>
+<label class="it"><input type="checkbox"><span>¿Quién está detrás?<small>[tú] Tú, solo o con quien sea, y dónde.</small></span></label>
+</details>
+
+<!-- ============================================================ -->
+<details id="ios">
+<summary><h2>Lanzamiento iPhone</h2><span class="when">cuando Apple lo apruebe</span><span class="count"></span></summary>
+<p class="note">Aquí va Product Hunt: un día de ranking que empieza a las 09:01 de Madrid y dura 24 h, con los 5 primeros como "Product of the Day". El equipo de PH elige qué sale en portada. Es una sola bala.</p>
+<label class="it"><input type="checkbox"><span>iOS aprobado, trader status hecho (sin él no sale en las tiendas de la UE) y publicado a mano</span></label>
+<label class="it"><input type="checkbox"><span>Web: cambiar cta() y hero_stores() a stores() en build.py (los dos badges con enlace)</span></label>
+<label class="it"><input type="checkbox"><span>PH: página "upcoming" 2-3 semanas antes para juntar seguidores</span></label>
+<label class="it"><input type="checkbox"><span>PH: miniatura 240×240 (puede ser animada), galería 1270×760, vídeo en YouTube</span></label>
+<label class="it"><input type="checkbox"><span>PH: tagline de 60 caracteres como máximo, descripción de 260 como máximo, primer comentario</span></label>
+<label class="it"><input type="checkbox"><span>PH: lanzar a las 09:01 de Madrid y avisar a tu gente para que entre a comentar (nunca pedir votos: PH lo penaliza)</span></label>
+<label class="it"><input type="checkbox"><span>Show HN el mismo día hacia las 14:00-15:00 de Madrid, con un primer comentario técnico</span></label>
+<label class="it"><input type="checkbox"><span>Vídeos del teclado de iOS (la demo grande y 5 shorts)</span></label>
+<label class="it"><input type="checkbox"><span>Prensa iPhone ES: Applesfera, iPadizate</span></label>
+
+<div class="draft"><div class="lbl">PH · tagline (elige una)<button>copiar</button></div><pre>Voice dictation that writes what you meant
+A dictation bubble for every app on your phone</pre></div>
+
+<div class="draft"><div class="lbl">PH · descripción<button>copiar</button></div><pre>Flowlet is a small bubble on top of any app. Tap it and talk the way you talk: change your mind, ramble, mix languages. It writes the message you meant and puts it in the text field. 30 free minutes, then from 0,99 €/hour or 5,99 €/month.</pre></div>
+
+<div class="draft"><div class="lbl">PH · primer comentario<button>copiar</button></div><pre>Hi Product Hunt, I'm Álvaro.
+
+I talk to my phone a lot, and keyboard dictation always gave me back exactly what I said: every "um", every "no wait", every restart. I wanted something that writes what I meant instead.
+
+Flowlet is that. A bubble on top of any app on Android and iPhone. You talk, it listens, and the clean message lands where you're typing. It handles corrections ("Thursday, no wait, Friday"), drops filler, shortens rambles and works in 12 languages.
+
+It's 5,99 €/month, with 30 free minutes so you can see if it fits how you talk.
+
+I'd love to hear where it gets you wrong. I'm here all day.</pre></div>
+
+<div class="draft"><div class="lbl">Show HN · título + primer comentario<button>copiar</button></div><pre>Show HN: Flowlet, voice dictation that writes what you meant
+
+I built a dictation app for Android and iOS. Instead of transcribing word by word, it rewrites what you said into the message you meant: corrections applied, filler gone, rambles shortened.
+
+How it works: audio is streamed while you talk, transcribed with Whisper, then a small LLM rewrites the transcript. [your call how much detail to give]
+
+The hardest bug so far: when you stay silent for a few seconds, Whisper confidently transcribes "Thanks for watching!" and the model's own confidence numbers don't flag it. The fix was to check the audio itself for silent stretches and drop any transcript segment that falls entirely inside one.
+
+Happy to answer anything about the pipeline, pricing or the stores.</pre></div>
+</details>
+
+<div class="foot"><span>useflowlet.com · hecho el 30-oct-2026</span><button id="reset">Desmarcar todo</button></div>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var KEY = "flowlet-launch-v1";
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+  function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return "k" + (h >>> 0).toString(36); }
+  var boxes = [].slice.call(document.querySelectorAll("label.it input"));
+  var seen = {};
+  boxes.forEach(function (b) {
+    var sec = b.closest("details").id;
+    var id = hash(sec + "|" + b.parentNode.textContent.trim());
+    while (seen[id]) id += "_";
+    seen[id] = 1;
+    b.dataset.id = id;
+    b.checked = !!state[id];
+    b.addEventListener("change", function () {
+      if (b.checked) state[id] = 1; else delete state[id];
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+      update();
+    });
+  });
+  function update() {
+    var done = boxes.filter(function (b) { return b.checked; }).length;
+    document.getElementById("fill").style.width = (boxes.length ? 100 * done / boxes.length : 0) + "%";
+    document.getElementById("num").textContent = done + " / " + boxes.length;
+    [].forEach.call(document.querySelectorAll("details"), function (d) {
+      var c = d.querySelector("summary .count");
+      if (!c) return;
+      var bs = [].slice.call(d.querySelectorAll("label.it input"));
+      var n = bs.filter(function (b) { return b.checked; }).length;
+      c.textContent = n + "/" + bs.length;
+      c.classList.toggle("done", bs.length > 0 && n === bs.length);
+    });
+  }
+  update();
+  document.getElementById("reset").addEventListener("click", function () {
+    if (!confirm("¿Desmarcar todo?")) return;
+    state = {};
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    boxes.forEach(function (b) { b.checked = false; });
+    update();
+  });
+  [].forEach.call(document.querySelectorAll(".draft button"), function (btn) {
+    btn.addEventListener("click", function () {
+      var text = btn.closest(".draft").querySelector("pre").textContent;
+      var done = function () { btn.textContent = "copiado"; btn.classList.add("ok"); setTimeout(function () { btn.textContent = "copiar"; btn.classList.remove("ok"); }, 1500); };
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () {});
+      else { var t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); done(); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
